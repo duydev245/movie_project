@@ -6,7 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
 
-    constructor(private jwtService:JwtService){}
+    constructor(private jwtService: JwtService) { }
     prisma = new PrismaClient();
 
 
@@ -42,32 +42,32 @@ export class AuthService {
     }
 
 
-    async login(userData : loginDto){
+    async login(userData: loginDto) {
         // step 1 : check user is existed by email
         const user = await this.prisma.nguoiDung.findFirst({
-            where:{
-                email:userData.email
+            where: {
+                email: userData.email
             }
         })
-        if(!user){
-            throw new HttpException({message:"Acount is not existed!"}, HttpStatus.UNAUTHORIZED)
+        if (!user) {
+            throw new HttpException({ message: "Acount is not existed!" }, HttpStatus.UNAUTHORIZED)
         }
         //step 2: check pass
-        const verifyPass = await bcrypt.compare(userData.mat_khau,user.mat_khau)
+        const verifyPass = await bcrypt.compare(userData.mat_khau, user.mat_khau)
 
-        if(!verifyPass){
-            throw new HttpException({message:"Password is not correct!"}, HttpStatus.UNAUTHORIZED)
+        if (!verifyPass) {
+            throw new HttpException({ message: "Password is not correct!" }, HttpStatus.UNAUTHORIZED)
         }
         //step 3 generate access token and ref token
 
-        const payload = {id:user.tai_khoan,name:user.ho_ten,email:user.email}
-        const accessToken = await this.jwtService.signAsync(payload,{
-            secret:process.env.ACCESS_TOKEN_KEY,
-            expiresIn:'1h'
+        const payload = { id: user.tai_khoan, name: user.ho_ten, email: user.email }
+        const accessToken = await this.jwtService.signAsync(payload, {
+            secret: process.env.ACCESS_TOKEN_KEY,
+            expiresIn: '1h'
         })
-        const refreshToken = await this.jwtService.signAsync(payload,{
+        const refreshToken = await this.jwtService.signAsync(payload, {
             secret: process.env.REFRESH_TOKEN_KEY,
-            expiresIn:'7d'
+            expiresIn: '7d'
         })
         return {
             accessToken,
