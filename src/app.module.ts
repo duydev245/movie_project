@@ -8,7 +8,9 @@ import { JwtStrategy } from './strategy/Jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule,JwtModule.register({}),ConfigModule],
+  imports: [AuthModule, JwtModule.register({}), ConfigModule.forRoot({
+    isGlobal: true
+  })],
   controllers: [AppController],
   providers: [
     AppService,
@@ -19,4 +21,4 @@ import { ConfigModule } from '@nestjs/config';
     JwtStrategy
   ],
 })
-export class AppModule {}
+export class AppModule { }
