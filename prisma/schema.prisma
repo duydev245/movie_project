@@ -28,13 +28,15 @@ model CumRap {
 }
 
 model DatVe {
-  tai_khoan     Int        @id @default(autoincrement())
+  STT_Ve        Int        @id @default(autoincrement())
+  tai_khoan     Int?
   ma_lich_chieu Int?
   ma_ghe        Int?
-  NguoiDung     NguoiDung  @relation(fields: [tai_khoan], references: [tai_khoan], onDelete: NoAction, onUpdate: NoAction, map: "DatVe_ibfk_1")
+  NguoiDung     NguoiDung? @relation(fields: [tai_khoan], references: [tai_khoan], onDelete: NoAction, onUpdate: NoAction, map: "DatVe_ibfk_1")
   LichChieu     LichChieu? @relation(fields: [ma_lich_chieu], references: [ma_lich_chieu], onDelete: NoAction, onUpdate: NoAction, map: "DatVe_ibfk_2")
 
   @@index([ma_lich_chieu], map: "ma_lich_chieu")
+  @@index([tai_khoan], map: "tai_khoan")
 }
 
 model Ghe {
@@ -75,7 +77,7 @@ model NguoiDung {
   so_dt           String? @db.VarChar(255)
   mat_khau        String? @db.VarChar(255)
   loai_nguoi_dung String? @db.VarChar(255)
-  DatVe           DatVe?
+  DatVe           DatVe[]
 }
 
 model Phim {

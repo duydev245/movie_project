@@ -6,11 +6,12 @@ import { APP_PIPE } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategy/Jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
+import { QuanLyDatVehModule } from './quan-ly-dat-ve/quan-ly-dat-ve.module';
 
 @Module({
   imports: [AuthModule, JwtModule.register({}), ConfigModule.forRoot({
     isGlobal: true
-  })],
+  }), QuanLyDatVehModule],
   controllers: [AppController],
   providers: [
     AppService,

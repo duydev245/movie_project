@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginDto, registerDto } from './dto/auth_dto';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -9,7 +9,9 @@ export class AuthController {
 
  // api register
   @ApiTags('QuanLyNguoiDung') 
-  @HttpCode(200)
+  @ApiResponse({status:200,description:'Register successfull!!'})
+  @ApiResponse({status:400,description:'Register fail!!'})
+
   @Post('register')
   register(@Body() body: registerDto){
     try {
@@ -21,9 +23,11 @@ export class AuthController {
 
   //api login
   @ApiTags('QuanLyNguoiDung')
-  @HttpCode(200)
+  @ApiResponse({status:200,description:'Login successfull!!'})
+  @ApiResponse({status:400,description:'Login fail!!'})
+
   @ApiBody({
-    type:registerDto
+    type:loginDto
   })
   @Post('login')
   login(@Body() body:loginDto){
