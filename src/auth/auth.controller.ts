@@ -1,11 +1,15 @@
-import { Body, Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginDto, registerDto } from './dto/auth_dto';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  // api register
+
+ // api register
+  @ApiTags('QuanLyNguoiDung') 
+  @HttpCode(200)
   @Post('register')
   register(@Body() body: registerDto){
     try {
@@ -15,6 +19,12 @@ export class AuthController {
     }
   }
 
+  //api login
+  @ApiTags('QuanLyNguoiDung')
+  @HttpCode(200)
+  @ApiBody({
+    type:registerDto
+  })
   @Post('login')
   login(@Body() body:loginDto){
     try {
