@@ -1,5 +1,15 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty} from "class-validator"
+
 export class DatVeDto {
-    taiKhoan: number;
-    maLichChieu: number;
-    maGhe: number;
-  }
+
+  taiKhoan: number;
+
+  @ApiProperty({ example: 'maLichChieu', description: 'Mã lịch chiếu ' })
+  @IsNotEmpty()
+  maLichChieu: number;
+
+  @ApiProperty({ example: 'maGhe', description: 'Mã ghế ' })
+  @IsNotEmpty()
+  maGhe: number;
+}
