@@ -15,4 +15,18 @@ export class DatVeDto {
 }
 
 
-export class 
+export class LichChieuDto{
+
+  @ApiProperty({example:'maPhim',description:'Mã phim'})
+  @IsNotEmpty()
+  maPhim : number
+  @ApiProperty({example:'ngayChieuGioiChieu',description:'Ngày giờ chiếu'})
+  @IsNotEmpty()
+  ngayChieuGioChieu :string
+  @ApiProperty({example:'maRap',description:'Mã rạp'})
+  @IsNotEmpty()
+  maRap : number
+  @ApiProperty({example:'giaVe',description:'Giá vé'})
+  @IsNotEmpty()
+  giaVe : number
+}
