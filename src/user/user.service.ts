@@ -21,4 +21,10 @@ export class UserService {
         }
     }
 
+    //API lấy danh sách người dùng
+    async LayDanhSachNguoiDung(){
+
+        const data = await this.prisma.nguoiDung.findMany()
+        return data;
+    }
 }

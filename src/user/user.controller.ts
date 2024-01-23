@@ -5,7 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller('QuanLyNguoiDung')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
 
   // API lấy danh sách loại người dung bao gồm (ho_ten, email,loai_nguoi_dung)
@@ -16,7 +16,13 @@ export class UserController {
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Lấy danh sách loại người dùng thành công!!' })
   @ApiResponse({ status: 400, description: 'Lấy danh sách loại người dùng thất bại !!' })
-  LayDanhSachLoaiNguoiDung(){
+  LayDanhSachLoaiNguoiDung() {
     return this.userService.LayDanhSachLoaiNguoiDung();
+  }
+
+
+  @Get('LayDanhSachNguoiDung')
+  LayDanhSachNguoiDung() {
+    return this.userService.LayDanhSachNguoiDung()
   }
 }

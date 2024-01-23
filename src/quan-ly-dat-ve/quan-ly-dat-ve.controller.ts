@@ -46,4 +46,5 @@ export class QuanLyDatVehController {
   TaoLichChieu(@Body() dto: LichChieuDto) {
     return this.quanLyDatVehService.TaoLichChieu(dto)
   }
+
 }
