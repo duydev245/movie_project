@@ -13,3 +13,6 @@ export class DatVeDto {
   @IsNotEmpty()
   maGhe: number;
 }
+
+
+export class 
