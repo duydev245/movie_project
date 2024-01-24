@@ -49,7 +49,19 @@ export class UserController {
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Tìm kiếm người dùng thành công!!' })
   @ApiResponse({ status: 400, description: 'Tìm kiếm người dùng thất bại !!' })
-  timKiemNguoiDung(@Param('id') id : string){
-     return this.userService.timKiemNguoiDung(+id);
+  timKiemNguoiDung(@Param('id') id: string) {
+    return this.userService.timKiemNguoiDung(+id);
+  }
+
+  @ApiTags('QuanLyNguoiDung')
+  @Get('timKiemNguoiDungTheoTenPhanTrang')
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Tìm kiếm người dùng theo tên phân trang thành công!!' })
+  @ApiResponse({ status: 400, description: 'Tìm kiếm người dùng theo tên phân trang thất bại !!' })
+  timKiemNguoiDungTheoTen(@Query('tenNguoiDung') tenNguoiDung: string,
+    @Query('currentPage') currentPage: string,
+    @Query('limit') limit: string) {
+    return this.userService.timKiemNguoiDungTheoTenPhanTrang(tenNguoiDung, +currentPage, +limit)
   }
 }

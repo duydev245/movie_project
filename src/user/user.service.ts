@@ -70,4 +70,34 @@ export class UserService {
             throw new HttpException({ message: "tim kiem nguoi dung that bai!!!" }, HttpStatus.BAD_REQUEST)
         }
     }
+    async timKiemNguoiDungTheoTenPhanTrang(tenNguoiDung: string, currentPage: number, limit: number) {
+        try {
+            const offset = (currentPage - 1) * limit;
+            const data = await this.prisma.nguoiDung.findFirst({
+                where: {
+                    ho_ten: {
+                        contains: tenNguoiDung
+                    }
+                },
+                take:limit,
+                skip:offset
+            })
+            const totalItems = await this.prisma.nguoiDung.count({
+                where: {
+                  ho_ten: {
+                    contains: tenNguoiDung,
+                  },
+                },
+              });
+            return{
+                data,
+                currentPage,
+                totalItems
+            }
+
+        } catch (error) {
+            throw new HttpException({ message: "tim kiem nguoi dung that bai!!!" }, HttpStatus.BAD_REQUEST)
+
+        }
+    }
 }
