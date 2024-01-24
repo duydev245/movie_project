@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -40,8 +40,16 @@ export class UserController {
   LayDanhSachNguoiDungPhanTrang(
     @Query('currentPage') currentPage: string,
     @Query('limit') limit: string) {
-    const parsedCurrentPage = parseInt(currentPage, 10);
-    const parsedLimit = parseInt(limit, 10);
-    return this.userService.LayDanhSachNguoiDungPhanTrang(parsedCurrentPage, parsedLimit);
+    return this.userService.LayDanhSachNguoiDungPhanTrang(+currentPage, +limit);
+  }
+
+  @ApiTags('QuanLyNguoiDung')
+  @Get('timKiemNguoiDung/:id')
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Tìm kiếm người dùng thành công!!' })
+  @ApiResponse({ status: 400, description: 'Tìm kiếm người dùng thất bại !!' })
+  timKiemNguoiDung(@Param('id') id : string){
+     return this.userService.timKiemNguoiDung(+id);
   }
 }

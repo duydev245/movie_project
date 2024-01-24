@@ -57,4 +57,17 @@ export class UserService {
         }
 
     }
+    async timKiemNguoiDung(id: number) {
+        try {
+            const data = await this.prisma.nguoiDung.findFirst({
+                where: {
+                    tai_khoan: id,
+                },
+            });
+            return data;
+        } catch (error) {
+            console.log(error);
+            throw new HttpException({ message: "tim kiem nguoi dung that bai!!!" }, HttpStatus.BAD_REQUEST)
+        }
+    }
 }
