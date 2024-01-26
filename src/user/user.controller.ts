@@ -69,9 +69,19 @@ export class UserController {
   @Post('ThongTinTaiKhoan')
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
-  @ApiResponse({ status: 200, description: 'Lấy thông tin người dùng theo Id thành công!!' })
-  @ApiResponse({ status: 500, description: 'TLấy thông tin người dùng theo Id thất bại !!' })
+  @ApiResponse({ status: 200, description: 'Lấy thông tin người tài khoản theo Id thành công!!' })
+  @ApiResponse({ status: 500, description: 'TLấy thông tin tài khoản dùng theo Id thất bại !!' })
   getThongTinTaiKhoan(@Body('Userid') userId: number) {
     return this.userService.getThongTinTaiKhoan(userId);
+  }
+
+  @ApiTags('QuanLyNguoiDung')
+  @Post('LayThongTinNguoiDung')
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Lấy thông tin người dùng theo tài khoản thành công!!' })
+  @ApiResponse({ status: 500, description: 'TLấy thông tin người dùng theo tài khoản thất bại !!' })
+  getUserInfo(@Body('Tai_Khoan') tai_khoan: string) {
+    return this.userService.LayThongTinNguoiDung(tai_khoan)
   }
 }

@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { STATUS_CODES } from 'http';
 
 @Injectable()
 export class UserService {
@@ -111,6 +112,21 @@ export class UserService {
             return data;
         } catch (error) {
             throw new HttpException({ message: "Get thong tin thai khoan fail" }, HttpStatus.NOT_FOUND);
+        }
+    }
+    async LayThongTinNguoiDung(tai_khoan: string) {
+        try {
+            const data = await this.prisma.nguoiDung.findFirst({
+                where: {
+                    email: tai_khoan
+                }
+            })
+            if (data === null) {
+                throw new HttpException({ message: 'Khong tim thay thong tin nguoi dung!!' }, HttpStatus.NOT_FOUND)
+            }
+            return data
+        } catch (error) {
+            throw new HttpException({ message: 'Tim kiem nguoi dung failed!!' }, HttpStatus.BAD_REQUEST);
         }
     }
 }
