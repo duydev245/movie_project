@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { ThemNguoiDung } from './dto/user_dto';
 
 @Controller('QuanLyNguoiDung')
 export class UserController {
@@ -83,5 +84,14 @@ export class UserController {
   @ApiResponse({ status: 500, description: 'TLấy thông tin người dùng theo tài khoản thất bại !!' })
   getUserInfo(@Body('Tai_Khoan') tai_khoan: string) {
     return this.userService.LayThongTinNguoiDung(tai_khoan)
+  }
+  @ApiTags('QuanLyNguoiDung')
+  @Post('ThemNguoiDung')
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Thêm người dùng thành công!!' })
+  @ApiResponse({ status: 500, description: 'Thêm người dùng thất bại !!' })
+  async themNguoiDung(@Body()dto: ThemNguoiDung) {
+  
+    return this.userService.themNguoiDung(dto);
   }
 }

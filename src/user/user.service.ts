@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { STATUS_CODES } from 'http';
-
+import { ThemNguoiDung } from './dto/user_dto';
+import * as bcrypt from 'bcrypt'
 @Injectable()
 export class UserService {
 
@@ -18,7 +18,7 @@ export class UserService {
             });
             return data;
         } catch (error) {
-            throw new HttpException({ message: 'Lay danh sach nguoi dung that bai' }, HttpStatus.BAD_REQUEST)
+            throw new HttpException({ message: 'Lay danh sach nguoi dung that bai' }, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 
@@ -54,7 +54,7 @@ export class UserService {
             }
         } catch (error) {
             console.log(error);
-            throw new HttpException({ message: "Lay danh sach nguoi dung failed!!" }, HttpStatus.BAD_REQUEST)
+            throw new HttpException({ message: "Lay danh sach nguoi dung failed!!" }, HttpStatus.INTERNAL_SERVER_ERROR)
         }
 
     }
@@ -68,7 +68,7 @@ export class UserService {
             return data;
         } catch (error) {
             console.log(error);
-            throw new HttpException({ message: "tim kiem nguoi dung that bai!!!" }, HttpStatus.BAD_REQUEST)
+            throw new HttpException({ message: "tim kiem nguoi dung that bai!!!" }, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
     async timKiemNguoiDungTheoTenPhanTrang(tenNguoiDung: string, currentPage: number, limit: number) {
@@ -97,7 +97,7 @@ export class UserService {
             }
 
         } catch (error) {
-            throw new HttpException({ message: "tim kiem nguoi dung that bai!!!" }, HttpStatus.BAD_REQUEST)
+            throw new HttpException({ message: "tim kiem nguoi dung that bai!!!" }, HttpStatus.INTERNAL_SERVER_ERROR)
 
         }
     }
@@ -111,7 +111,7 @@ export class UserService {
             })
             return data;
         } catch (error) {
-            throw new HttpException({ message: "Get thong tin thai khoan fail" }, HttpStatus.NOT_FOUND);
+            throw new HttpException({ message: "Get thong tin thai khoan fail" }, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     async LayThongTinNguoiDung(tai_khoan: string) {
@@ -129,4 +129,23 @@ export class UserService {
             throw new HttpException({ message: 'Tim kiem nguoi dung failed!!' }, HttpStatus.BAD_REQUEST);
         }
     }
+    async themNguoiDung(dto: ThemNguoiDung) {
+        try {
+            const hashedPassword = await bcrypt.hash(dto.matKhau, 10);
+            // Tạo người dùng mới
+            return this.prisma.nguoiDung.create({
+                data: {
+                    mat_khau: hashedPassword,
+                    email: dto.email,
+                    so_dt: dto.soDt,
+                    loai_nguoi_dung: dto.maLoaiNguoiDung,
+                    ho_ten: dto.hoTen,
+                },
+            });
+        } catch (error) {
+            console.error('Error while creating user:', error);
+            throw new HttpException('Thêm người dùng thất bại', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
