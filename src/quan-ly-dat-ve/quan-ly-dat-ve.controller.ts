@@ -30,7 +30,7 @@ export class QuanLyDatVehController {
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Lấy danh sách thành công!!' })
-  @ApiResponse({ status: 400, description: 'Lấy danh sách thất bại !!' })
+  @ApiResponse({ status: 500, description: 'Lấy danh sách thất bại !!' })
   getDanhSachPhongVe(@Query('MaLichChieu') maLichChieu: String) {
 
     return this.quanLyDatVehService.getDanhSachPhongVe(+maLichChieu);
@@ -42,7 +42,7 @@ export class QuanLyDatVehController {
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Tạo lịch chiếu thành công!!' })
-  @ApiResponse({ status: 400, description: 'Tạo lịch chiếu thất bại !!' })
+  @ApiResponse({ status: 500, description: 'Tạo lịch chiếu thất bại !!' })
   TaoLichChieu(@Body() dto: LichChieuDto) {
     return this.quanLyDatVehService.TaoLichChieu(dto)
   }

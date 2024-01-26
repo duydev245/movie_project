@@ -10,7 +10,7 @@ export class AuthController {
  // api register
   @ApiTags('QuanLyNguoiDung') 
   @ApiResponse({status:200,description:'Register successfull!!'})
-  @ApiResponse({status:400,description:'Register fail!!'})
+  @ApiResponse({status:500,description:'Register fail!!'})
 
   @Post('register')
   register(@Body() body: registerDto){
@@ -24,7 +24,7 @@ export class AuthController {
   //api login
   @ApiTags('QuanLyNguoiDung')
   @ApiResponse({status:200,description:'Login successfull!!'})
-  @ApiResponse({status:400,description:'Login fail!!'})
+  @ApiResponse({status:500,description:'Login fail!!'})
 
   @ApiBody({
     type:loginDto

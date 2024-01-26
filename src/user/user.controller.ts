@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -15,7 +15,7 @@ export class UserController {
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Lấy danh sách loại người dùng thành công!!' })
-  @ApiResponse({ status: 400, description: 'Lấy danh sách loại người dùng thất bại !!' })
+  @ApiResponse({ status: 500, description: 'Lấy danh sách loại người dùng thất bại !!' })
   LayDanhSachLoaiNguoiDung() {
     return this.userService.LayDanhSachLoaiNguoiDung();
   }
@@ -26,7 +26,7 @@ export class UserController {
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Lấy danh sách người dùng thành công!!' })
-  @ApiResponse({ status: 400, description: 'Lấy danh sách người dùng thất bại !!' })
+  @ApiResponse({ status: 500, description: 'Lấy danh sách người dùng thất bại !!' })
   LayDanhSachNguoiDung() {
     return this.userService.LayDanhSachNguoiDung()
   }
@@ -36,7 +36,7 @@ export class UserController {
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Lấy danh sách người dùng phân trang thành công!!' })
-  @ApiResponse({ status: 400, description: 'Lấy danh sách người dùng phân trang thất bại !!' })
+  @ApiResponse({ status: 500, description: 'Lấy danh sách người dùng phân trang thất bại !!' })
   LayDanhSachNguoiDungPhanTrang(
     @Query('currentPage') currentPage: string,
     @Query('limit') limit: string) {
@@ -48,7 +48,7 @@ export class UserController {
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Tìm kiếm người dùng thành công!!' })
-  @ApiResponse({ status: 400, description: 'Tìm kiếm người dùng thất bại !!' })
+  @ApiResponse({ status: 500, description: 'Tìm kiếm người dùng thất bại !!' })
   timKiemNguoiDung(@Param('id') id: string) {
     return this.userService.timKiemNguoiDung(+id);
   }
@@ -58,10 +58,20 @@ export class UserController {
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Tìm kiếm người dùng theo tên phân trang thành công!!' })
-  @ApiResponse({ status: 400, description: 'Tìm kiếm người dùng theo tên phân trang thất bại !!' })
+  @ApiResponse({ status: 500, description: 'Tìm kiếm người dùng theo tên phân trang thất bại !!' })
   timKiemNguoiDungTheoTen(@Query('tenNguoiDung') tenNguoiDung: string,
     @Query('currentPage') currentPage: string,
     @Query('limit') limit: string) {
     return this.userService.timKiemNguoiDungTheoTenPhanTrang(tenNguoiDung, +currentPage, +limit)
+  }
+
+  @ApiTags('QuanLyNguoiDung')
+  @Post('ThongTinTaiKhoan')
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Lấy thông tin người dùng theo Id thành công!!' })
+  @ApiResponse({ status: 500, description: 'TLấy thông tin người dùng theo Id thất bại !!' })
+  getThongTinTaiKhoan(@Body('Userid') userId: number) {
+    return this.userService.getThongTinTaiKhoan(userId);
   }
 }
