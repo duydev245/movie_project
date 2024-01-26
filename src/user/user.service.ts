@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { ThemNguoiDung } from './dto/user_dto';
+import { CapNhatThongTinNguoiDungDto, ThemNguoiDung } from './dto/user_dto';
 import * as bcrypt from 'bcrypt'
 @Injectable()
 export class UserService {
@@ -148,4 +148,58 @@ export class UserService {
         }
     }
 
+    async CapNhatThongTinNguoiDung(id: number, dto: CapNhatThongTinNguoiDungDto) {
+
+        try {
+            const newHashPass = await bcrypt.hash(dto.matKhau, 10)
+            await this.prisma.nguoiDung.update({
+                where: { tai_khoan: id },
+                data: {
+                    ho_ten: dto.hoTen,
+                    email: dto.email,
+                    so_dt: dto.soDt,
+                    mat_khau: newHashPass,
+                },
+            });
+
+        } catch (error) {
+            throw new HttpException({ message: "Cập nhật thông tin người dùng thất bại" }, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+    async CapNhatThongTinNguoiDungPost(id: number, dto: CapNhatThongTinNguoiDungDto) {
+        try {
+            const hashedPassword = await bcrypt.hash(dto.matKhau, 10);
+            await this.prisma.nguoiDung.update({
+                where: { tai_khoan: id },
+                data: {
+                    ho_ten: dto.hoTen,
+                    email: dto.email,
+                    so_dt: dto.soDt,
+                    mat_khau: hashedPassword,
+                },
+            });
+        } catch (error) {
+            throw new HttpException({ message: 'Cập nhật thông tin người dùng thất bại!!' }, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async xoaNguoiDung(taikhoan: number) {
+        try {
+            const user = await this.prisma.nguoiDung.findFirst({
+                where: {
+                    tai_khoan: taikhoan
+                }
+            });
+            if (!user) {
+                throw new NotFoundException('Người dùng không tồn tại');
+            }
+            await this.prisma.nguoiDung.delete({
+                where: {
+                    tai_khoan: user.tai_khoan,
+                },
+            });
+        } catch (error) {
+            throw new Error('Đã xảy ra lỗi khi xóa người dùng: ' + error.message);
+        }
+    }
 }

@@ -22,3 +22,21 @@ export class ThemNguoiDung {
     hoTen: string;
 
 }
+export class CapNhatThongTinNguoiDungDto {
+    @ApiProperty({ example: 'example@example.com', description: 'Email' })
+    @IsNotEmpty()
+    @IsEmail()
+    email: string;
+
+    @ApiProperty({ example: '0123456789', description: 'Số điện thoại' })
+    @IsNotEmpty()
+    soDt: string;
+
+    @ApiProperty({ example: 'TenNguoiDung', description: 'Họ tên' })
+    @IsNotEmpty()
+    hoTen: string;
+
+    @ApiProperty({ example: '123456', description: 'Mật khẩu' })
+    @IsNotEmpty()
+    matKhau: string;
+}

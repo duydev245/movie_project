@@ -1,8 +1,8 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { ThemNguoiDung } from './dto/user_dto';
+import { CapNhatThongTinNguoiDungDto, ThemNguoiDung } from './dto/user_dto';
 
 @Controller('QuanLyNguoiDung')
 export class UserController {
@@ -87,11 +87,44 @@ export class UserController {
   }
   @ApiTags('QuanLyNguoiDung')
   @Post('ThemNguoiDung')
+  @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiResponse({ status: 200, description: 'Thêm người dùng thành công!!' })
   @ApiResponse({ status: 500, description: 'Thêm người dùng thất bại !!' })
-  async themNguoiDung(@Body()dto: ThemNguoiDung) {
-  
+  async themNguoiDung(@Body() dto: ThemNguoiDung) {
+
     return this.userService.themNguoiDung(dto);
   }
+  @ApiTags('QuanLyNguoiDung')
+  @Put('CapNhatThongTinNguoiDung/:id')
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Cập nhật người dùng thành công!!' })
+  @ApiResponse({ status: 500, description: 'Cập nhật người dùng thất bại !!' })
+  CapNhatThongTinNguoiDung(@Param('id') id: string, @Body() dto: CapNhatThongTinNguoiDungDto) {
+    return this.userService.CapNhatThongTinNguoiDung(+id, dto)
+  }
+  @ApiTags('QuanLyNguoiDung')
+  @Post('CapNhatThongTinNguoiDung/:id')
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Cập nhật người dùng thành công!!' })
+  @ApiResponse({ status: 500, description: 'Cập nhật người dùng thất bại !!' })
+  CapNhatThongTinNguoiDungPost(@Param('id') id: string, @Body() dto: CapNhatThongTinNguoiDungDto) {
+    return this.userService.CapNhatThongTinNguoiDungPost(+id, dto)
+  }
+  @ApiTags('QuanLyNguoiDung')
+  @Delete('XoaNguoiDung')
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+  @ApiResponse({ status: 200, description: 'Xóa người dùng thành công!!' })
+  @ApiResponse({ status: 500, description: 'Xóa người dùng thất bại !!' })
+  xoaNguoiDung(@Query('TaiKhoan') taiKhoan: string) {
+    try {
+      return this.userService.xoaNguoiDung(+taiKhoan);
+    } catch (error) {
+      throw new HttpException({ message: 'Xóa người dùng thất bại' },HttpStatus.INTERNAL_SERVER_ERROR)}
+
+  }
+
 }
