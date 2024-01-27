@@ -21,7 +21,7 @@ export class UserController {
     return this.userService.LayDanhSachLoaiNguoiDung();
   }
 
-  //API Lấy danh sách người dùng
+  // API Lấy danh sách người dùng
   @ApiTags('QuanLyNguoiDung')
   @Get('LayDanhSachNguoiDung')
   @UseGuards(AuthGuard("jwt"))

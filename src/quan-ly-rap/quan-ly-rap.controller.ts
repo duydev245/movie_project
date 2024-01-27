@@ -10,28 +10,35 @@ export class QuanLyRapController {
   @ApiTags('QuanLyRap')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
-  @Get('LayThongTinHeThongRap')
-  heThongRapInfo() {
-    return this.quanLyRapService.heThongRapInfo();
+  @Get('LayThongTinHeThongRap/:maHeThongRap')
+  heThongRapInfo(@Param('maHeThongRap') maHeThongRap: string) {
+    return this.quanLyRapService.heThongRapInfo(+maHeThongRap);
   }
 
-  // @Post()
-  // create(@Body() createQuanLyRapDto: CreateQuanLyRapDto) {
-  //   return this.quanLyRapService.create(createQuanLyRapDto);
-  // }
+  // API LayThongTinCumRapTheoHeThong
+  @ApiTags('QuanLyRap')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Get('LayThongTinCumRapTheoHeThong/:maHeThongRap')
+  cumRapInfo(@Param('maHeThongRap') maHeThongRap: string) {
+    return this.quanLyRapService.cumRapInfo(+maHeThongRap);
+  }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.quanLyRapService.findOne(+id);
-  // }
+  // API LayThongTinLichChieuHeThongRap
+  @ApiTags('QuanLyRap')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Get('LayThongTinLichChieuHeThongRap/:maRap')
+  lichChieuInfo(@Param('maRap') maRap: string) {
+    return this.quanLyRapService.lichChieuInfo(+maRap);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateQuanLyRapDto: UpdateQuanLyRapDto) {
-  //   return this.quanLyRapService.update(+id, updateQuanLyRapDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.quanLyRapService.remove(+id);
-  // }
+  // API LayThongTinLichChieuPhim
+  @ApiTags('QuanLyRap')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Get('LayThongTinLichChieuPhim/:maPhim')
+  lichChieuPhimInfo(@Param('maPhim') maPhim: number) {
+    return this.quanLyRapService.lichChieuPhimInfo(+maPhim);
+  }
 }

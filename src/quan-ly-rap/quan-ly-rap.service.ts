@@ -7,31 +7,62 @@ export class QuanLyRapService {
   prisma = new PrismaClient();
 
   // LayThongTinHeThongRap
-  async heThongRapInfo() {
+  async heThongRapInfo(maHeThongRap: number) {
     try {
-      let data = this.prisma.heThongRap.findMany();
+      let data = await this.prisma.heThongRap.findFirst({
+        where: {
+          ma_he_thong_rap: maHeThongRap
+        }
+      });
       return data;
     } catch (error) {
       console.log(error);
-      return 'lôi...';
+      return 'thất bại';
     }
   }
 
-  
+  // LayThongTinCumRapTheoHeThong
+  async cumRapInfo(maHeThongRap: number) {
+    try {
+      let data = await this.prisma.cumRap.findMany({
+        where: {
+          ma_he_thong_rap: maHeThongRap
+        },
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      return 'thất bại';
+    }
+  }
 
-  // create(createQuanLyRapDto: CreateQuanLyRapDto) {
-  //   return 'This action adds a new quanLyRap';
-  // }
+  // LayThongTinLichChieuHeThongRap
+  async lichChieuInfo(maRap: number) {
+    try {
+      let data = await this.prisma.lichChieu.findMany({
+        where: {
+          ma_rap: maRap
+        },
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      return 'thất bại';
+    }
+  }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} quanLyRap`;
-  // }
-
-  // update(id: number, updateQuanLyRapDto: UpdateQuanLyRapDto) {
-  //   return `This action updates a #${id} quanLyRap`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} quanLyRap`;
-  // }
+  // LayThongTinLichChieuPhim
+  async lichChieuPhimInfo(maPhim: number) {
+    try {
+      let data = await this.prisma.lichChieu.findMany({
+        where: {
+          ma_phim: maPhim
+        }
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      return 'thất bại';
+    }
+  }
 }
