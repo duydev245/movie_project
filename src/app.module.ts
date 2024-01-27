@@ -8,11 +8,12 @@ import { JwtStrategy } from './strategy/Jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
 import { QuanLyDatVehModule } from './quan-ly-dat-ve/quan-ly-dat-ve.module';
 import { UserModule } from './user/user.module';
+import { QuanLyRapModule } from './quan-ly-rap/quan-ly-rap.module';
 
 @Module({
   imports: [AuthModule, JwtModule.register({}), ConfigModule.forRoot({
     isGlobal: true
-  }), QuanLyDatVehModule, UserModule],
+  }), QuanLyDatVehModule, UserModule, QuanLyRapModule],
   controllers: [AppController],
   providers: [
     AppService,
