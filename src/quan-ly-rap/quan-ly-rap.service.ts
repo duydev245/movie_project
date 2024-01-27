@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { CreateQuanLyRapDto } from './dto/create-quan-ly-rap.dto';
-import { UpdateQuanLyRapDto } from './dto/update-quan-ly-rap.dto';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class QuanLyRapService {
-  create(createQuanLyRapDto: CreateQuanLyRapDto) {
-    return 'This action adds a new quanLyRap';
+
+  prisma = new PrismaClient();
+
+  // LayThongTinHeThongRap
+  async heThongRapInfo() {
+    try {
+      let data = this.prisma.heThongRap.findMany();
+      return data;
+    } catch (error) {
+      console.log(error);
+      return 'lôi...';
+    }
   }
 
-  findAll() {
-    return `This action returns all quanLyRap`;
-  }
+  
 
-  findOne(id: number) {
-    return `This action returns a #${id} quanLyRap`;
-  }
+  // create(createQuanLyRapDto: CreateQuanLyRapDto) {
+  //   return 'This action adds a new quanLyRap';
+  // }
 
-  update(id: number, updateQuanLyRapDto: UpdateQuanLyRapDto) {
-    return `This action updates a #${id} quanLyRap`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} quanLyRap`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} quanLyRap`;
-  }
+  // update(id: number, updateQuanLyRapDto: UpdateQuanLyRapDto) {
+  //   return `This action updates a #${id} quanLyRap`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} quanLyRap`;
+  // }
 }

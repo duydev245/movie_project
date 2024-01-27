@@ -1,34 +1,37 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { QuanLyRapService } from './quan-ly-rap.service';
-import { CreateQuanLyRapDto } from './dto/create-quan-ly-rap.dto';
-import { UpdateQuanLyRapDto } from './dto/update-quan-ly-rap.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@Controller('quan-ly-rap')
+@Controller('QuanLyRap')
 export class QuanLyRapController {
-  constructor(private readonly quanLyRapService: QuanLyRapService) {}
+  constructor(private readonly quanLyRapService: QuanLyRapService) { }
 
-  @Post()
-  create(@Body() createQuanLyRapDto: CreateQuanLyRapDto) {
-    return this.quanLyRapService.create(createQuanLyRapDto);
+  // API LayThongTinHeThongRap
+  @ApiTags('QuanLyRap')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Get('LayThongTinHeThongRap')
+  heThongRapInfo() {
+    return this.quanLyRapService.heThongRapInfo();
   }
 
-  @Get()
-  findAll() {
-    return this.quanLyRapService.findAll();
-  }
+  // @Post()
+  // create(@Body() createQuanLyRapDto: CreateQuanLyRapDto) {
+  //   return this.quanLyRapService.create(createQuanLyRapDto);
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.quanLyRapService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.quanLyRapService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateQuanLyRapDto: UpdateQuanLyRapDto) {
-    return this.quanLyRapService.update(+id, updateQuanLyRapDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateQuanLyRapDto: UpdateQuanLyRapDto) {
+  //   return this.quanLyRapService.update(+id, updateQuanLyRapDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.quanLyRapService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.quanLyRapService.remove(+id);
+  // }
 }
