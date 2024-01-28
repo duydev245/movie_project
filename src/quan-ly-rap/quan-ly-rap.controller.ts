@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { QuanLyRapService } from './quan-ly-rap.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -10,8 +10,8 @@ export class QuanLyRapController {
   @ApiTags('QuanLyRap')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
-  @Get('LayThongTinHeThongRap/:maHeThongRap')
-  heThongRapInfo(@Param('maHeThongRap') maHeThongRap: string) {
+  @Get('LayThongTinHeThongRap')
+  heThongRapInfo(@Query('maHeThongRap') maHeThongRap: string) {
     return this.quanLyRapService.heThongRapInfo(+maHeThongRap);
   }
 
@@ -19,8 +19,8 @@ export class QuanLyRapController {
   @ApiTags('QuanLyRap')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
-  @Get('LayThongTinCumRapTheoHeThong/:maHeThongRap')
-  cumRapInfo(@Param('maHeThongRap') maHeThongRap: string) {
+  @Get('LayThongTinCumRapTheoHeThong')
+  cumRapInfo(@Query('maHeThongRap') maHeThongRap: string) {
     return this.quanLyRapService.cumRapInfo(+maHeThongRap);
   }
 
@@ -28,8 +28,8 @@ export class QuanLyRapController {
   @ApiTags('QuanLyRap')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
-  @Get('LayThongTinLichChieuHeThongRap/:maRap')
-  lichChieuInfo(@Param('maRap') maRap: string) {
+  @Get('LayThongTinLichChieuHeThongRap')
+  lichChieuInfo(@Query('maRap') maRap: string) {
     return this.quanLyRapService.lichChieuInfo(+maRap);
   }
 
@@ -37,8 +37,8 @@ export class QuanLyRapController {
   @ApiTags('QuanLyRap')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
-  @Get('LayThongTinLichChieuPhim/:maPhim')
-  lichChieuPhimInfo(@Param('maPhim') maPhim: number) {
+  @Get('LayThongTinLichChieuPhim')
+  lichChieuPhimInfo(@Query('maPhim') maPhim: number) {
     return this.quanLyRapService.lichChieuPhimInfo(+maPhim);
   }
 }

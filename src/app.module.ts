@@ -9,11 +9,12 @@ import { ConfigModule } from '@nestjs/config';
 import { QuanLyDatVehModule } from './quan-ly-dat-ve/quan-ly-dat-ve.module';
 import { UserModule } from './user/user.module';
 import { QuanLyRapModule } from './quan-ly-rap/quan-ly-rap.module';
+import { QuanLyPhimModule } from './quan-ly-phim/quan-ly-phim.module';
 
 @Module({
   imports: [AuthModule, JwtModule.register({}), ConfigModule.forRoot({
     isGlobal: true
-  }), QuanLyDatVehModule, UserModule, QuanLyRapModule],
+  }), QuanLyDatVehModule, UserModule, QuanLyRapModule, QuanLyPhimModule],
   controllers: [AppController],
   providers: [
     AppService,
