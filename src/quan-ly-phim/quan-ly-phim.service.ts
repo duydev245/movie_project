@@ -77,7 +77,6 @@ export class QuanLyPhimService {
       console.log(error);
       throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
   }
 
 }
