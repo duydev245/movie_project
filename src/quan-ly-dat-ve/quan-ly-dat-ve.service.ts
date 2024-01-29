@@ -37,53 +37,53 @@ export class QuanLyDatVehService {
   }
 
   // lay danh sach phong ve
-  async getDanhSachPhongVe(maLichChieu: number){
+  async getDanhSachPhongVe(maLichChieu: number) {
     try {
       const danhsach = await this.prisma.lichChieu.findFirst({
-        where:{
-          ma_lich_chieu:maLichChieu
+        where: {
+          ma_lich_chieu: maLichChieu
         }
       })
       return danhsach
     } catch (error) {
-      throw new HttpException({message:"Lay danh sach phong ve that bai"}, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: "Lay danh sach phong ve that bai" }, HttpStatus.BAD_REQUEST);
     }
   }
 
   //khoi tao lich chieu
-  async TaoLichChieu(dto : LichChieuDto){
+  async TaoLichChieu(dto: LichChieuDto) {
 
     try {
       const checkMaPhim = await this.prisma.phim.findFirst({
-        where:{
-          ma_phim:dto.maPhim,
+        where: {
+          ma_phim: dto.maPhim,
 
         }
       })
-      if(!checkMaPhim){
-        throw new HttpException({message:"Khong co ma phim thich hop!!!"}, HttpStatus.BAD_REQUEST)
+      if (!checkMaPhim) {
+        throw new HttpException({ message: "Khong co ma phim thich hop!!!" }, HttpStatus.BAD_REQUEST)
       }
       const checkMaRap = await this.prisma.rapPhim.findFirst({
-        where:{
-          ma_rap:dto.maRap
+        where: {
+          ma_rap: dto.maRap
         }
       })
-      if(!checkMaPhim){
-        throw new HttpException({message:'Ma rap khong thich hop '}, HttpStatus.BAD_REQUEST)
+      if (!checkMaPhim) {
+        throw new HttpException({ message: 'Ma rap khong thich hop ' }, HttpStatus.BAD_REQUEST)
       }
       const ngayGioChieu = new Date(dto.ngayChieuGioChieu);
       const lichChieu = await this.prisma.lichChieu.create({
-        data:{
-          ma_rap:dto.maRap,
-          ma_phim:dto.maPhim,
-          ngay_gio_chieu:ngayGioChieu.toISOString(),
-          gia_ve:dto.giaVe
-          
+        data: {
+          ma_rap: dto.maRap,
+          ma_phim: dto.maPhim,
+          ngay_gio_chieu: ngayGioChieu.toISOString(),
+          gia_ve: dto.giaVe
+
         }
       })
       return lichChieu
     } catch (error) {
-      throw new HttpException({message:"Tao lich chieu that bai"}, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: "Tao lich chieu that bai" }, HttpStatus.BAD_REQUEST);
 
     }
 
