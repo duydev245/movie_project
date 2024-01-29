@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class QuanLyPhimService {
       return data;
     } catch (error) {
       console.log(error);
-      return 'thất bại';
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -30,48 +30,54 @@ export class QuanLyPhimService {
       return data;
     } catch (error) {
       console.log(error);
-      return 'thất bại';
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   // LayDanhSachPhimPhanTrang
   async phimListPage(tenPhim: string, soTrang: number, soPhanTuTrenTrang: number) {
-    const vitribatdau = (soTrang - 1) * soPhanTuTrenTrang;
+    try {
+      const vitribatdau = (soTrang - 1) * soPhanTuTrenTrang;
 
-    const tongPhanTu = await this.prisma.phim.count({
-      where: {
-        ten_phim: {
-          contains: tenPhim,
+      const tongPhanTu = await this.prisma.phim.count({
+        where: {
+          ten_phim: {
+            contains: tenPhim,
+          }
         }
+      })
+
+      const tongTrang = Math.ceil(tongPhanTu / soPhanTuTrenTrang);
+      
+      if(soTrang < 1 || soTrang > tongTrang) {
+        throw new Error("Số Trang Không Khả Dụng!");
       }
-    })
 
-    const tongTrang = Math.ceil(tongPhanTu / soPhanTuTrenTrang);
+      const data = await this.prisma.phim.findMany({
+        where: {
+          ten_phim: {
+            contains: tenPhim,
+          }
+        },
+        take: soPhanTuTrenTrang,
+        skip: vitribatdau
+      })
+
+      console.log("Số Trang: ",soTrang);
+      console.log("Số Phần Tử: ", soPhanTuTrenTrang);
+      console.log("Offset: ", vitribatdau);
+          
+      return {
+        data,
+        soTrang,
+        tongTrang,
+        tongPhanTu
+      }
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     
-    if(soTrang < 1 || soTrang > tongTrang) {
-      throw new Error("Invalid currentPage value");
-    }
-
-    const data = await this.prisma.phim.findMany({
-      where: {
-        ten_phim: {
-          contains: tenPhim,
-        }
-      },
-      take: soPhanTuTrenTrang,
-      skip: vitribatdau
-    })
-
-    console.log("Số Trang: ",soTrang);
-    console.log("Số Phần Tử: ", soPhanTuTrenTrang);
-    console.log("Offset: ", vitribatdau);
-        
-    return {
-      data,
-      soTrang,
-      tongTrang,
-      tongPhanTu
-    }
   }
 
 }

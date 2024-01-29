@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class QuanLyRapService {
       return data;
     } catch (error) {
       console.log(error);
-      return 'thất bại';
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -32,7 +32,7 @@ export class QuanLyRapService {
       return data;
     } catch (error) {
       console.log(error);
-      return 'thất bại';
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -47,7 +47,7 @@ export class QuanLyRapService {
       return data;
     } catch (error) {
       console.log(error);
-      return 'thất bại';
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -62,7 +62,7 @@ export class QuanLyRapService {
       return data;
     } catch (error) {
       console.log(error);
-      return 'thất bại';
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
