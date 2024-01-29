@@ -32,7 +32,7 @@ export class QuanLyDatVehService {
       console.log('Booking success!!!');
       return datVe
     } catch (error) {
-      throw new HttpException({ message: 'Error booking ticket' }, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: 'Error booking ticket' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -46,7 +46,7 @@ export class QuanLyDatVehService {
       })
       return danhsach
     } catch (error) {
-      throw new HttpException({ message: "Lay danh sach phong ve that bai" }, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: "Lay danh sach phong ve that bai" }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -61,7 +61,7 @@ export class QuanLyDatVehService {
         }
       })
       if (!checkMaPhim) {
-        throw new HttpException({ message: "Khong co ma phim thich hop!!!" }, HttpStatus.BAD_REQUEST)
+        throw new HttpException({ message: "Khong co ma phim thich hop!!!" }, HttpStatus.INTERNAL_SERVER_ERROR)
       }
       const checkMaRap = await this.prisma.rapPhim.findFirst({
         where: {
@@ -69,7 +69,7 @@ export class QuanLyDatVehService {
         }
       })
       if (!checkMaPhim) {
-        throw new HttpException({ message: 'Ma rap khong thich hop ' }, HttpStatus.BAD_REQUEST)
+        throw new HttpException({ message: 'Ma rap khong thich hop ' }, HttpStatus.INTERNAL_SERVER_ERROR)
       }
       const ngayGioChieu = new Date(dto.ngayChieuGioChieu);
       const lichChieu = await this.prisma.lichChieu.create({
@@ -83,7 +83,7 @@ export class QuanLyDatVehService {
       })
       return lichChieu
     } catch (error) {
-      throw new HttpException({ message: "Tao lich chieu that bai" }, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: "Tao lich chieu that bai" }, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
