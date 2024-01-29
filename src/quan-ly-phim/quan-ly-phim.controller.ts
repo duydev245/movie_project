@@ -32,4 +32,13 @@ export class QuanLyPhimController {
   phimListPage(@Query('tenPhim') tenPhim: string, @Query('soTrang') soTrang: number, @Query('soPhanTuTrenTrang') soPhanTuTrenTrang: number) {
     return this.quanLyPhimService.phimListPage(tenPhim, +soTrang, +soPhanTuTrenTrang);
   }
+
+  // API LayDanhSachPhimTheoNgay
+  @ApiTags('QuanLyPhim')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Get('LayDanhSachPhimTheoNgay')
+  phimListDate(){
+    return this.quanLyPhimService.phimListDate();
+  }
 }
