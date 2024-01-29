@@ -74,7 +74,7 @@ export class UserService {
     async timKiemNguoiDungTheoTenPhanTrang(tenNguoiDung: string, currentPage: number, limit: number) {
         try {
             const offset = (currentPage - 1) * limit;
-            const data = await this.prisma.nguoiDung.findFirst({
+            const data = await this.prisma.nguoiDung.findMany({
                 where: {
                     ho_ten: {
                         contains: tenNguoiDung

@@ -23,8 +23,8 @@ export class QuanLyPhimService {
       let data = await this.prisma.phim.findMany({
         where: {
           ten_phim: {
-            equals: tenPhim,
-        },
+            contains: tenPhim
+          }
         }
       })
       return data;
@@ -36,7 +36,7 @@ export class QuanLyPhimService {
 
   // LayDanhSachPhimPhanTrang
   async phimListPage(tenPhim: string, soTrang: number, soPhanTuTrenTrang: number) {
-    let soLuong = (await (this.prisma.phim.findMany())).length; 
+    
 
 
 
