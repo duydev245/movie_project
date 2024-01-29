@@ -36,10 +36,42 @@ export class QuanLyPhimService {
 
   // LayDanhSachPhimPhanTrang
   async phimListPage(tenPhim: string, soTrang: number, soPhanTuTrenTrang: number) {
+    const vitribatdau = (soTrang - 1) * soPhanTuTrenTrang;
+
+    const tongPhanTu = await this.prisma.phim.count({
+      where: {
+        ten_phim: {
+          contains: tenPhim,
+        }
+      }
+    })
+
+    const tongTrang = Math.ceil(tongPhanTu / soPhanTuTrenTrang);
     
+    if(soTrang < 1 || soTrang > tongTrang) {
+      throw new Error("Invalid currentPage value");
+    }
 
+    const data = await this.prisma.phim.findMany({
+      where: {
+        ten_phim: {
+          contains: tenPhim,
+        }
+      },
+      take: soPhanTuTrenTrang,
+      skip: vitribatdau
+    })
 
-
+    console.log("Số Trang: ",soTrang);
+    console.log("Số Phần Tử: ", soPhanTuTrenTrang);
+    console.log("Offset: ", vitribatdau);
+        
+    return {
+      data,
+      soTrang,
+      tongTrang,
+      tongPhanTu
+    }
   }
 
 }
