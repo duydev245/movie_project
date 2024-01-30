@@ -41,4 +41,13 @@ export class QuanLyPhimController {
   phimListDate(@Query('tenPhim') tenPhim: string, @Query('soTrang') soTrang: number, @Query('soPhanTuTrenTrang') soPhanTuTrenTrang: number, @Query('tuNgay') tuNgay: string, @Query('denNgay') denNgay: string){
     return this.quanLyPhimService.phimListDate(tenPhim, +soTrang, +soPhanTuTrenTrang, tuNgay, denNgay);
   }
+
+  // API ThemPhimUploadHinh
+  @ApiTags('QuanLyPhim')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Post('ThemPhimUploadHinh')
+  ThemPhimUploadHinh(@Body('frm') frm: Array<string>){
+    return this.quanLyPhimService.ThemPhimUploadHinh();
+  }
 }

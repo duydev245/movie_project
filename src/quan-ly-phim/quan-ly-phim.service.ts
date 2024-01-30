@@ -131,4 +131,7 @@ export class QuanLyPhimService {
       throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  // ThemPhimUploadHinh
+  async ThemPhimUploadHinh(){ }
 }
