@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UploadedFiles } from '@nestjs/common';
 import { QuanLyPhimService } from './quan-ly-phim.service';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('QuanLyPhim')
 export class QuanLyPhimController {
@@ -47,7 +49,7 @@ export class QuanLyPhimController {
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
   @Post('ThemPhimUploadHinh')
-  ThemPhimUploadHinh(@Body('frm') frm: Array<string>){
+  ThemPhimUploadHinh(){
     return this.quanLyPhimService.ThemPhimUploadHinh();
   }
 
