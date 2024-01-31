@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
@@ -48,8 +48,8 @@ export class QuanLyPhimService {
       })
 
       const tongTrang = Math.ceil(tongPhanTu / soPhanTuTrenTrang);
-      
-      if(soTrang < 1 || soTrang > tongTrang) {
+
+      if (soTrang < 1 || soTrang > tongTrang) {
         throw new Error("Số Trang Không Khả Dụng!");
       }
 
@@ -63,10 +63,10 @@ export class QuanLyPhimService {
         skip: vitribatdau
       })
 
-      console.log("Số Trang: ",soTrang);
+      console.log("Số Trang: ", soTrang);
       console.log("Số Phần Tử: ", soPhanTuTrenTrang);
       console.log("Offset: ", vitribatdau);
-          
+
       return {
         data,
         soTrang,
@@ -97,8 +97,8 @@ export class QuanLyPhimService {
       })
 
       const tongTrang = Math.ceil(tongPhanTu / soPhanTuTrenTrang);
-      
-      if(soTrang < 1 || soTrang > tongTrang) {
+
+      if (soTrang < 1 || soTrang > tongTrang) {
         throw new Error("Số Trang Không Khả Dụng!");
       }
 
@@ -116,10 +116,10 @@ export class QuanLyPhimService {
         skip: vitribatdau
       })
 
-      console.log("Số Trang: ",soTrang);
+      console.log("Số Trang: ", soTrang);
       console.log("Số Phần Tử: ", soPhanTuTrenTrang);
       console.log("Offset: ", vitribatdau);
-          
+
       return {
         data,
         soTrang,
@@ -133,5 +133,47 @@ export class QuanLyPhimService {
   }
 
   // ThemPhimUploadHinh
-  async ThemPhimUploadHinh(){ }
+  async ThemPhimUploadHinh() { }
+
+  // XoaPhim - XP
+  async XoaPhim(MaPhim: number) {
+    try {
+      let phim = await this.prisma.phim.findFirst({
+        where: {
+          ma_phim: MaPhim
+        }
+      });
+
+      if (!phim) {
+        throw new NotFoundException('Phim không tồn tại');
+      }
+
+      await this.prisma.phim.delete({
+        where: {
+          ma_phim: phim.ma_phim
+        }
+      })
+
+      return { message: 'Xóa Thành Công', status: 200, phim };
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  // LayThongTinPhim
+  async LayThongTinPhim(MaPhim: number) {
+    try {
+      let data = await this.prisma.phim.findFirst({
+        where: {
+          ma_phim: MaPhim
+        }
+      })
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ message: 'Lỗi...' }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

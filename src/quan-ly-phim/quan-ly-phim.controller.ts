@@ -50,4 +50,35 @@ export class QuanLyPhimController {
   ThemPhimUploadHinh(@Body('frm') frm: Array<string>){
     return this.quanLyPhimService.ThemPhimUploadHinh();
   }
+
+  // API CapNhatPhimUpload
+
+  // API ThemPhim (QuanLyPhim) 
+
+  // API XP
+  @ApiTags('QuanLyPhim')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Delete('XP')
+  XP(@Query('MaPhim') MaPhim: number){
+    return this.quanLyPhimService.XoaPhim(+MaPhim);
+  }
+
+  // API XoaPhim
+  @ApiTags('QuanLyPhim')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Delete('XoaPhim')
+  XoaPhim(@Query('MaPhim') MaPhim: number){
+    return this.quanLyPhimService.XoaPhim(+MaPhim);
+  }
+
+  // API LayThongTinPhim
+  @ApiTags('QuanLyPhim')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Get('LayThongTinPhim')
+  LayThongTinPhim(@Query('MaPhim') MaPhim: number) {
+    return this.quanLyPhimService.LayThongTinPhim(+MaPhim);
+  }
 }
