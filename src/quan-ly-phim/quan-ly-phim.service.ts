@@ -133,7 +133,12 @@ export class QuanLyPhimService {
   }
 
   // ThemPhimUploadHinh
-  async ThemPhimUploadHinh() { }
+  async ThemPhimUploadHinh(file: Express.Multer.File, folder: string) { }
+
+  // CapNhatPhimUpload
+  async CapNhatPhimUpload() {
+
+  }
 
   // XoaPhim - XP
   async XoaPhim(MaPhim: number) {

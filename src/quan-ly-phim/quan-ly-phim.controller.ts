@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UploadedFiles, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus } from '@nestjs/common';
 import { QuanLyPhimService } from './quan-ly-phim.service';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
 @Controller('QuanLyPhim')
@@ -40,7 +40,7 @@ export class QuanLyPhimController {
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
   @Get('LayDanhSachPhimTheoNgay')
-  phimListDate(@Query('tenPhim') tenPhim: string, @Query('soTrang') soTrang: number, @Query('soPhanTuTrenTrang') soPhanTuTrenTrang: number, @Query('tuNgay') tuNgay: string, @Query('denNgay') denNgay: string){
+  phimListDate(@Query('tenPhim') tenPhim: string, @Query('soTrang') soTrang: number, @Query('soPhanTuTrenTrang') soPhanTuTrenTrang: number, @Query('tuNgay') tuNgay: string, @Query('denNgay') denNgay: string) {
     return this.quanLyPhimService.phimListDate(tenPhim, +soTrang, +soPhanTuTrenTrang, tuNgay, denNgay);
   }
 
@@ -49,20 +49,52 @@ export class QuanLyPhimController {
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
   @Post('ThemPhimUploadHinh')
-  ThemPhimUploadHinh(){
-    return this.quanLyPhimService.ThemPhimUploadHinh();
+  @UseInterceptors(FilesInterceptor('files', 10, {
+    storage: diskStorage({
+      destination: process.cwd() + "/src/img",
+      filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname)
+    })
+  }))
+
+  async ThemPhimUploadHinh(@UploadedFile(
+            new ParseFilePipeBuilder()
+                .addFileTypeValidator({
+                    /**
+                     * allow types
+                     *  png (type/mimetype): png|image\/png
+                     *  jpg (type/mimetype): jpg|image\/jpeg
+                     */
+                    fileType: /^(png|image\/png|jpg|image\/jpeg)$/i,
+                })
+                .addMaxSizeValidator({
+                    maxSize: 1024 * 1024, //kb = 1MB
+                    message: 'Size must be less than 1mb',
+                })
+                .build({
+                    errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+                }),
+        )
+        file: Express.Multer.File,
+
+        @Body('folder') folder: string,) {
+    return this.quanLyPhimService.ThemPhimUploadHinh(file, folder);
   }
 
-  // API CapNhatPhimUpload
-
-  // API ThemPhim (QuanLyPhim) 
+  // API CapNhatPhimUpload 
+  @ApiTags('QuanLyPhim')
+  @ApiResponse({ status: 200, description: 'thành công!' })
+  @ApiResponse({ status: 400, description: 'lỗi...' })
+  @Post('CapNhatPhimUpload')
+  CapNhatPhimUpload() {
+    return this.quanLyPhimService.CapNhatPhimUpload();
+  }
 
   // API XP
   @ApiTags('QuanLyPhim')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
   @Delete('XP')
-  XP(@Query('MaPhim') MaPhim: number){
+  XP(@Query('MaPhim') MaPhim: number) {
     return this.quanLyPhimService.XoaPhim(+MaPhim);
   }
 
@@ -71,7 +103,7 @@ export class QuanLyPhimController {
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
   @Delete('XoaPhim')
-  XoaPhim(@Query('MaPhim') MaPhim: number){
+  XoaPhim(@Query('MaPhim') MaPhim: number) {
     return this.quanLyPhimService.XoaPhim(+MaPhim);
   }
 
