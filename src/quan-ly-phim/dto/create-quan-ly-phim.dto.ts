@@ -1,1 +1,3 @@
-export class CreateQuanLyPhimDto {}
+export class CreateQuanLyPhimDto {
+    
+}

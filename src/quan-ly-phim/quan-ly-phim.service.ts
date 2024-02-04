@@ -1,5 +1,8 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { MovieDto } from './dto/movie.dto';
+import { log } from 'console';
+
 
 @Injectable()
 export class QuanLyPhimService {
@@ -133,7 +136,29 @@ export class QuanLyPhimService {
   }
 
   // ThemPhimUploadHinh
-  async ThemPhimUploadHinh(file: Express.Multer.File, folder: string) { }
+  async ThemPhimUploadHinh(movieDto: MovieDto, filePath: string) {
+    console.log(movieDto);
+    try {
+      const createdMovie = await this.prisma.phim.create({
+        data: {
+          ten_phim: movieDto.ten_phim,
+          trailer: movieDto.trailer,
+          hinh_anh: filePath,
+          mo_ta: movieDto.mo_ta,
+          ngay_khoi_chieu: movieDto.ngay_khoi_chieu,
+          danh_gia: +movieDto.danh_gia,
+          hot: +movieDto.hot,
+          dang_chieu: +movieDto.dang_chieu,
+          SAP_CHIEU: +movieDto.SAP_CHIEU,
+        },
+      });
+      return { success: true, movie: createdMovie };
+    } catch (error) {
+
+      console.log(error);
+      return { success: false, error: error.message };
+    }
+  }
 
   // CapNhatPhimUpload
   async CapNhatPhimUpload() {

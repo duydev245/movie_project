@@ -1,8 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UploadedFiles, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus } from '@nestjs/common';
 import { QuanLyPhimService } from './quan-ly-phim.service';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiConsumes, ApiBody } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { MovieDto } from './dto/movie.dto';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Controller('QuanLyPhim')
 export class QuanLyPhimController {
@@ -48,36 +51,74 @@ export class QuanLyPhimController {
   @ApiTags('QuanLyPhim')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
+
+  // @ApiBody({
+  //   schema: {
+  //     type: 'object',
+  //     properties: {
+  //       ten_phim: { type: 'string' },
+  //       trailer: { type: 'string' },
+  //       hinh_anh: {
+  //         type: 'string',
+  //         format: 'binary',
+  //       },
+  //       mo_ta: { type: 'string' },
+  //       ngay_khoi_chieu: { type: 'DateTime' },
+  //       danh_gia: { type: 'int' },
+  //       hot: { type: 'Boolean' },
+  //       dang_chieu: { type: 'Boolean' },
+  //       SAP_CHIEU: { type: 'Boolean' }
+  //     },
+  //   },
+  // })
+
   @Post('ThemPhimUploadHinh')
-  @UseInterceptors(FilesInterceptor('files', 10, {
+  @ApiConsumes('multipart/form-data')
+
+  @UseInterceptors(FileInterceptor('hinh_anh', {
     storage: diskStorage({
       destination: process.cwd() + "/src/img",
       filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname)
     })
   }))
 
-  async ThemPhimUploadHinh(@UploadedFile(
-            new ParseFilePipeBuilder()
-                .addFileTypeValidator({
-                    /**
-                     * allow types
-                     *  png (type/mimetype): png|image\/png
-                     *  jpg (type/mimetype): jpg|image\/jpeg
-                     */
-                    fileType: /^(png|image\/png|jpg|image\/jpeg)$/i,
-                })
-                .addMaxSizeValidator({
-                    maxSize: 1024 * 1024, //kb = 1MB
-                    message: 'Size must be less than 1mb',
-                })
-                .build({
-                    errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-                }),
-        )
-        file: Express.Multer.File,
+  async ThemPhimUploadHinh(@UploadedFile() file, @Body() movieDto: MovieDto) {
+    try {
+      // Ensure the 'file' and 'movieDto' are properly populated
+      if (!file || !movieDto) {
+        throw new Error('File or movie data is missing');
+      }
 
-        @Body('folder') folder: string,) {
-    return this.quanLyPhimService.ThemPhimUploadHinh(file, folder);
+      // Process the file and get the file path
+      const filePath = await this.processFile(file);
+
+      // Call the service to create a new movie
+      const result = await this.quanLyPhimService.ThemPhimUploadHinh(movieDto, filePath);
+
+      return result;
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
+  private async processFile(file: Express.Multer.File): Promise<string> {
+    // Define the directory where you want to save the processed files
+    const uploadDirectory = process.cwd() + "/src/img"; // Adjust the path based on your project structure
+
+    // Create the directory if it doesn't exist
+    if (!fs.existsSync(uploadDirectory)) {
+      fs.mkdirSync(uploadDirectory, { recursive: true });
+    }
+
+    // Generate a unique filename
+    const uniqueFilename = new Date().getTime() + "_" + file.originalname;
+
+    // Move the uploaded file to the designated directory
+    const filePath = path.join(uploadDirectory, uniqueFilename);
+    await fs.promises.rename(file.path, filePath);
+
+    // Return the file path to be saved in the database
+    return filePath;
   }
 
   // API CapNhatPhimUpload 
