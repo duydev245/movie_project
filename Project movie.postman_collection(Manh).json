@@ -1,0 +1,605 @@
+{
+	"info": {
+		"_postman_id": "1c803e2d-efa0-4062-a76a-77b3f8938c82",
+		"name": "Project movie",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31032085"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ho_ten\":\"Pham Tien Manh2\",\r\n    \"email\":\"test3@gmail.com\",\r\n    \"so_dt\":\"02222222\",\r\n    \"mat_khau\":\"1234567\",\r\n    \"loai_nguoi_dung\":\"Loai 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaCIsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzA2MTAzNjQyLCJleHAiOjE3MDYxMDcyNDJ9.Z2m1kigYMD6LMxUlnWb-Q7uLarBbXa_MGzP8iB1toYA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"test4@gmail.com\",\r\n    \"mat_khau\":\"1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DatVe",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaCIsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzA1OTM5MjQzLCJleHAiOjE3MDU5NDI4NDN9.aTzx-Ovi_LGBVovNoIdA8VJ2Ho8RetVtCEXGyFgo1hk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"maLichChieu\":1,\r\n    \"maGhe\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/QuanLyDatVe/DatVe",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyDatVe",
+						"DatVe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LayMaLichChieu",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyDatVe",
+						"LayDanhSachPhongVe"
+					],
+					"query": [
+						{
+							"key": "MaLichChieu",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TaoLichChieu",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"maPhim\":3,\r\n    \"ngayChieuGioChieu\": \"2023-10-01T10:45:00\",\r\n    \"maRap\":1,\r\n    \"giaVe\":1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyDatVe/TaoLichChieu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyDatVe",
+						"TaoLichChieu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lấy danh sách  loại người dung",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/QuanLyNguoiDung/LayDanhSachLoaiNguoiDung",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"LayDanhSachLoaiNguoiDung"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lấy danh sách người dung phân trang",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/QuanLyNguoiDung/LayDanhSachNguoiDungPhanTrang?currentPage=1&limit=3",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"LayDanhSachNguoiDungPhanTrang"
+					],
+					"query": [
+						{
+							"key": "currentPage",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tìm kiếm người dùng",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/QuanLyNguoiDung/timKiemNguoiDung/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"timKiemNguoiDung",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tìm kiếm người dung theo họ tên và phân trang",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/QuanLyNguoiDung/timKiemNguoiDungTheoTenPhanTrang?tenNguoiDung=Phạm&currentPage=1&limit=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"timKiemNguoiDungTheoTenPhanTrang"
+					],
+					"query": [
+						{
+							"key": "tenNguoiDung",
+							"value": "Phạm"
+						},
+						{
+							"key": "currentPage",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lấy thông tin người dung qua Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Userid\":4\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyNguoiDung/ThongTinTaiKhoan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"ThongTinTaiKhoan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lấy thông tin người dùng qua tài khoản(Email)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Tai_Khoan\":\"test2@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyNguoiDung/LayThongTinNguoiDung",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"LayThongTinNguoiDung"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Thêm người dùng",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"matKhau\": \"1234567\",\r\n  \"email\": \"admintestCreate2@example.com\",\r\n  \"soDt\": \"0123456789\",\r\n  \"maLoaiNguoiDung\": \"Loai 2\",\r\n  \"hoTen\": \"Admin333111\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyNguoiDung/ThemNguoiDung",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"ThemNguoiDung"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cập nhật thông tin người đùng",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"Hellomail2@gmail.com\",\r\n    \"soDt\": \"0123456789\",\r\n    \"hoTen\": \"Anh_Long2\",\r\n    \"matKhau\": \"1234567\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyNguoiDung/CapNhatThongTinNguoiDung/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"CapNhatThongTinNguoiDung",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cập nhật thông tin người dùng(Post)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"matKhau\": \"1234567\",\r\n  \"email\": \"new_email@example.com\",\r\n  \"soDt\": \"0123456789\",\r\n  \"maLoaiNguoiDung\": \"Loai 2\",\r\n  \"hoTen\": \"Manh_dev\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyNguoiDung/CapNhatThongTinNguoiDung/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"CapNhatThongTinNguoiDung",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Xóa người dùng",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsIm5hbWUiOiJQaGFtIFRpZW4gTWFuaDQiLCJlbWFpbCI6InRlc3Q0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzI3MzkwMCwiZXhwIjoxNzA3Mjc3NTAwfQ.0kdcrewnG23X3Ir7YTO0woqxysjQjJURgYqGmqZg2Uw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"QuanLyNguoiDung",
+						"XoaNguoiDung"
+					],
+					"query": [
+						{
+							"key": "TaiKhoan",
+							"value": "7"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
