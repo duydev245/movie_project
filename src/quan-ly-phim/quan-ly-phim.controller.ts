@@ -6,6 +6,7 @@ import { diskStorage } from 'multer';
 import { MovieDto } from './dto/movie.dto';
 import * as fs from 'fs';
 import * as path from 'path';
+import { UpdateQuanLyPhimDto } from './dto/update-quan-ly-phim.dto';
 
 @Controller('QuanLyPhim')
 export class QuanLyPhimController {
@@ -52,26 +53,6 @@ export class QuanLyPhimController {
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
 
-  // @ApiBody({
-  //   schema: {
-  //     type: 'object',
-  //     properties: {
-  //       ten_phim: { type: 'string' },
-  //       trailer: { type: 'string' },
-  //       hinh_anh: {
-  //         type: 'string',
-  //         format: 'binary',
-  //       },
-  //       mo_ta: { type: 'string' },
-  //       ngay_khoi_chieu: { type: 'DateTime' },
-  //       danh_gia: { type: 'int' },
-  //       hot: { type: 'Boolean' },
-  //       dang_chieu: { type: 'Boolean' },
-  //       SAP_CHIEU: { type: 'Boolean' }
-  //     },
-  //   },
-  // })
-
   @Post('ThemPhimUploadHinh')
   @ApiConsumes('multipart/form-data')
 
@@ -85,12 +66,21 @@ export class QuanLyPhimController {
   async ThemPhimUploadHinh(@UploadedFile() file, @Body() movieDto: MovieDto) {
     try {
       // Ensure the 'file' and 'movieDto' are properly populated
-      if (!file || !movieDto) {
-        throw new Error('File or movie data is missing');
-      }
+      // if (!file || !movieDto) {
+      //   throw new Error('File or movie data is missing');
+      // }
 
       // Process the file and get the file path
-      const filePath = await this.processFile(file);
+    
+
+
+     // Ensure the 'file' and 'movieDto' are properly populated
+     if (!file || !movieDto) {
+      throw new Error('File or movie data is missing');
+    }
+
+    // Process the file and get the file path
+    const filePath = await this.processFile(file);
 
       // Call the service to create a new movie
       const result = await this.quanLyPhimService.ThemPhimUploadHinh(movieDto, filePath);
@@ -125,10 +115,30 @@ export class QuanLyPhimController {
   @ApiTags('QuanLyPhim')
   @ApiResponse({ status: 200, description: 'thành công!' })
   @ApiResponse({ status: 400, description: 'lỗi...' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('hinh_anh', {
+    storage: diskStorage({
+      destination: process.cwd() + "/src/img",
+      filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname)
+    })
+  }))
+
   @Post('CapNhatPhimUpload')
-  CapNhatPhimUpload() {
-    return this.quanLyPhimService.CapNhatPhimUpload();
-  }
+  async CapNhatPhimUpload(@UploadedFile() file, @Body() movieDto: UpdateQuanLyPhimDto) {
+    try {
+      let filePath = null
+      if(file)  {
+         filePath = await this.processFile(file);
+      }
+      
+      // Call the service to create a new movie
+      const result = await this.quanLyPhimService.CapNhatPhimUpload(movieDto, filePath);
+
+      return result;
+    } catch (error) {
+      console.log(error)
+      return { success: false, error: error.message };
+    }  }
 
   // API XP
   @ApiTags('QuanLyPhim')

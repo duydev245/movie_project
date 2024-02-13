@@ -1,6 +1,7 @@
 // movie.dto.ts
 
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class MovieDto {
   @ApiProperty()
@@ -21,12 +22,12 @@ export class MovieDto {
   @ApiProperty()
   danh_gia: number | null;
 
-  @ApiProperty()
-  hot: number | null;
+  @ApiProperty({ type: 'boolean' })
+  hot: string | null;
 
-  @ApiProperty()
-  dang_chieu: number | null;
+  @ApiProperty({ type: 'boolean' })
+  dang_chieu: string | null;
 
-  @ApiProperty()
-  SAP_CHIEU: number | null;
+  @ApiProperty({ type: 'boolean' })
+  SAP_CHIEU: string | null;
 }

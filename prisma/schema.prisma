@@ -88,9 +88,9 @@ model Phim {
   mo_ta           String?     @db.VarChar(255)
   ngay_khoi_chieu DateTime?   @db.Date
   danh_gia        Int?
-  hot             Int?
-  dang_chieu      Int?
-  SAP_CHIEU       Int?
+  hot             Boolean?
+  dang_chieu      Boolean?
+  SAP_CHIEU       Boolean?
   Banner          Banner[]
   LichChieu       LichChieu[]
 }

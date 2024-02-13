@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { PrismaClient } from '@prisma/client';
 import { MovieDto } from './dto/movie.dto';
 import { log } from 'console';
+import { UpdateQuanLyPhimDto } from './dto/update-quan-ly-phim.dto';
 
 
 @Injectable()
@@ -147,9 +148,9 @@ export class QuanLyPhimService {
           mo_ta: movieDto.mo_ta,
           ngay_khoi_chieu: movieDto.ngay_khoi_chieu,
           danh_gia: +movieDto.danh_gia,
-          hot: +movieDto.hot,
-          dang_chieu: +movieDto.dang_chieu,
-          SAP_CHIEU: +movieDto.SAP_CHIEU,
+          hot: movieDto.hot === "true" ? true : false,
+          dang_chieu: movieDto.dang_chieu === "true" ? true : false,
+          SAP_CHIEU: movieDto.SAP_CHIEU === "true" ? true : false,
         },
       });
       return { success: true, movie: createdMovie };
@@ -161,8 +162,41 @@ export class QuanLyPhimService {
   }
 
   // CapNhatPhimUpload
-  async CapNhatPhimUpload() {
+  async CapNhatPhimUpload(movieDto: UpdateQuanLyPhimDto, filePath: string) {
+    console.log(movieDto);
 
+    const fillBoolean = (value: string | null) => {
+      if (value) return value === "true" ? true : false
+      if (value === null) return undefined
+    }
+
+
+    const dataUpdate = {
+      ten_phim: movieDto.ten_phim || undefined,
+      trailer: movieDto.trailer || undefined,
+      hinh_anh: filePath || undefined,
+      mo_ta: movieDto.mo_ta || undefined,
+      ngay_khoi_chieu: movieDto.ngay_khoi_chieu || undefined,
+      danh_gia: +movieDto.danh_gia || undefined,
+      hot: fillBoolean(movieDto.hot),
+      dang_chieu: fillBoolean(movieDto.dang_chieu),
+      SAP_CHIEU: fillBoolean(movieDto.SAP_CHIEU),
+    }
+
+    console.log("dataUpdate",dataUpdate)
+    try {
+      const createdMovie = await this.prisma.phim.update({
+        where: {
+          ma_phim: +movieDto.ma_phim
+        },
+        data: dataUpdate
+      });
+      return { success: true, movie: createdMovie };
+    } catch (error) {
+
+      console.log(error);
+      return { success: false, error: error };
+    }
   }
 
   // XoaPhim - XP
