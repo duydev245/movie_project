@@ -84,7 +84,6 @@ export class QuanLyDatVehService {
       return lichChieu
     } catch (error) {
       throw new HttpException({ message: "Tao lich chieu that bai" }, HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
 
   }
